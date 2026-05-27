@@ -9,7 +9,7 @@ import random
 
 #funçao que passa o nome do app
 def nome_app():
-    print('Nome Generico')
+    print('Space Route - Plataforma Inteligente de Monitoramento e Gerenciamento do Espaço Aéreo\n')
     print('============================================\n')
 
 #funcao que exibe opçoes para o usuario
@@ -17,8 +17,9 @@ def exibir_opcoes():
     print('1- Proposta e Problema do Projeto\n')
     print('2- Descrição da Solução do Projeto\n')
     print('3- Suporte Tecnológico Coerente e Viabilidade\n')
-    print('4- Protipo e Demonstração de Viabilidade\n') #desvio de rotas, monitoramento de tráfego aéreo e espacial, previsão de riscos de colisão, categorizaçao
-    print('5- Sair\n')
+    print('4- Simulação de Desvio de Rotas\n') 
+    print('5- Simulação de tamanho do detrito espacial para desvio\n')
+    print('6- Sair\n')
 
 #funcao que finaliza o app
 def finalizar_app():
@@ -121,6 +122,42 @@ def desvio_rotas():
 
     voltar_app()
 
+
+def tamanho_detrito():
+    os.system('cls')
+    print('PROTOCOLO DE DESVIO - TAMANHO ESTIMADO DE DETRITO ESPACIAL')
+    print('Este protótipo simples calcula uma janela de desvio com base na distância, velocidade e margem de segurança.\n')
+
+    continuar = 's'
+    while continuar.lower() == 's':
+        try:
+            distancia = float(input('Digite a distância até o detrito espacial (em km): '))
+            velocidade = float(input('Digite a velocidade relativa do detrito (em km/s): '))
+            margem = float(input('Digite a margem de segurança (%) para o desvio(nao precisa colocar o %): '))
+
+            if distancia <= 0 or velocidade <= 0 or margem < 0:
+                print('Valores inválidos. Use números positivos para distância e velocidade, e margem maior ou igual a zero.\n')
+                continuar = input('Deseja tentar novamente? (s/n): ').strip().lower()
+                continue
+
+            tamanho_estimado = (distancia * (margem / 100)) + (velocidade * 0.5)
+            print(f'\nTamanho estimado da janela de desvio: {tamanho_estimado:.2f} km')
+
+            if tamanho_estimado >= 10:
+                print('Recomendação: desvio imediato para rota alternativa.')
+            else:
+                print('Recomendação: manter a rota com monitoramento contínuo.')
+
+        except ValueError:
+            print('Entrada inválida. Digite apenas números.\n')
+
+        continuar = input('\nDeseja realizar outra simulação? (s/n): ').strip().lower()
+        os.system('cls')
+
+    print('Retornando ao menu principal...')
+    input('Pressione Enter para continuar...')
+    main()
+
 #funçao para escolher a opçao
 def escolher_opcao():
     print('=============================================')
@@ -137,6 +174,8 @@ def escolher_opcao():
         elif opcao == 4:
             desvio_rotas()
         elif opcao == 5:
+            tamanho_detrito()
+        elif opcao == 6:
             finalizar_app()
         else:
             opcao_invalida()
