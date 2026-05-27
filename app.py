@@ -2,6 +2,10 @@
 import os #os.system('cls')
 #biblioteca para calculos
 import math 
+#biblioteca para gerar tempo
+import time
+#biblioteca para gerar numeros aleatorios
+import random
 
 #funçao que passa o nome do app
 def nome_app():
