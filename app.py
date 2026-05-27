@@ -17,7 +17,7 @@ def exibir_opcoes():
     print('1- Proposta e Problema do Projeto\n')
     print('2- Descrição da Solução do Projeto\n')
     print('3- Suporte Tecnológico Coerente e Viabilidade\n')
-    print('4- Protipos e Demonstração de Viabilidade\n') #desvio de rotas, monitoramento de tráfego aéreo e espacial, previsão de riscos de colisão, categorizaçao
+    print('4- Protipo e Demonstração de Viabilidade\n') #desvio de rotas, monitoramento de tráfego aéreo e espacial, previsão de riscos de colisão, categorizaçao
     print('5- Sair\n')
 
 #funcao que finaliza o app
@@ -78,6 +78,49 @@ def viabilidade_tecnica():
     print('\nA proposta é plausível porque combina em grande parte tecnologias já existentes em uma só plataforma integrada.Empresas e organizações espaciais e de aviação já utilizam monitoramento em tempo real, previsão de rotas e rastreamento orbital, então o diferencial seria centralizar e automatizar essas informações em um único sistema inteligente incluindo a rastreabilidade e classificação de lixo espacial junto ao restante do tráfego aéreo e orbital\n')
     voltar_app()
 
+def desvio_rotas():
+    os.system('cls')
+    print('Aeronaves e foguetes poderiam receber alertas automáticos de risco de colisão, permitindo que pilotos e controladores de voo tomem decisões informadas sobre desvios de rota ou ajustes de altitude para evitar áreas congestionadas ou perigosas\n')
+    input('Pressione Enter para simular um alerta de risco de colisão...')
+    os.system('cls')
+    print('DESVIO DE ROTAS - SIMULAÇÃO INTERATIVA')
+    print('Aqui você pode escolher a rota atual e ver se há necessidade de desviar para uma opção mais segura.\n')
+
+    rotas = {
+        1: {'nome': 'Rota 1', 'status': 'livre', 'descricao': 'Trajeto direto, sem problemas detectados.'},
+        2: {'nome': 'Rota 2', 'status': 'congestionada', 'descricao': 'Tráfego aéreo intenso e risco de atraso.'},
+        3: {'nome': 'Rota 3', 'status': 'perigosa', 'descricao': 'Área com risco de colisão por detritos ou tráfego espacial.'}
+    }
+    for chave, rota in rotas.items():
+        print(f"{chave} - {rota['nome']} ({rota['status']}) - {rota['descricao']}")
+
+    try:
+        escolha = int(input('\nDigite o número da rota atual: '))
+        if escolha not in rotas:
+            raise ValueError #verifica se a escolha é válida, caso contrário levanta um erro para ser tratado
+    except ValueError:
+        print('\nOpção inválida. Voltando ao menu principal...')
+        input('Pressione Enter para continuar...')
+        main()
+        return
+
+    rota_atual = rotas[escolha]
+    print(f"\nVocê selecionou: {rota_atual['nome']} ({rota_atual['status']})")
+
+    if rota_atual['status'] == 'livre':
+        print('Status: Sem necessidade de desvio. A rota está segura para prosseguir.')
+    else:
+        alternativas = [rota for rota in rotas.values() if rota['status'] == 'livre']
+        print('Status: Rota com risco detectado.')
+        if alternativas:
+            print('Sugestão de desvio para rotas mais seguras:')
+            for rota in alternativas:
+                print(f"- {rota['nome']}: {rota['descricao']}")
+        else:
+            print('Não há rotas livres disponíveis no momento. Avalie aguardar ou ajustar rota manualmente.')
+
+    voltar_app()
+
 #funçao para escolher a opçao
 def escolher_opcao():
     print('=============================================')
@@ -92,7 +135,7 @@ def escolher_opcao():
         elif opcao == 3:
             viabilidade_tecnica()
         elif opcao == 4:
-            print('Em desenvolvimento...')
+            desvio_rotas()
         elif opcao == 5:
             finalizar_app()
         else:
