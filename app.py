@@ -1,5 +1,7 @@
 #biblioteca que limpa o terminal
 import os #os.system('cls')
+#biblioteca para calculos
+import math 
 
 #funçao que passa o nome do app
 def nome_app():
@@ -10,8 +12,8 @@ def nome_app():
 def exibir_opcoes():
     print('1- Proposta e Problema do Projeto\n')
     print('2- Descrição da Solução do Projeto\n')
-    print('3- ')
-    print('4- ')
+    print('3- Suporte Tecnológico Coerente e Viabilidade\n')
+    print('4- Protipos e Demonstração de Viabilidade\n') #desvio de rotas, monitoramento de tráfego aéreo e espacial, previsão de riscos de colisão, categorizaçao
     print('5- Sair\n')
 
 #funcao que finaliza o app
@@ -53,11 +55,23 @@ def proposta_problema_projeto():
 
     voltar_app()
 
+#funçao que representa a opçao 2, onde a soluçao do projeto é explicada
 def solucao_projeto():
     os.system('cls')
     print('A solução funcionará como uma forma de integrar informações de companhias aéreas, sistemas de navegação de aeronaves pessoais e operações espaciais, reunindo dados de aviões, helicópteros, foguetes e objetos orbitais como lixo espacial\n')
     print('Uma única infraestrutura com o propósito de aumentar a segurança e a eficiência do tráfego aéreo, utilizando análise contínua de dados para prever riscos de colisão, calcular rotas mais seguras e gerar desvios automáticos de rota de maneira precisa e dinâmica\n')
     print('Além disso, a solução auxiliará operações aeroespaciais críticas, permitindo que lançamentos e retornos de foguetes ocorram de forma mais segura através do monitoramento simultâneo do tráfego aéreo e de possíveis riscos orbitais como detritos espaciais e satélites proximos\n')
+    voltar_app()
+
+#funçao que representa a opçao 3, onde a viabilidade técnica do projeto é explicada
+def viabilidade_tecnica():
+    os.system('cls')
+    print('A viabilidade técnica do projeto é suportada por avanços recentes em diversas áreas tecnológicas, incluindo:\n')
+    lista_variabilidades = ['satélites e sistemas GNSS/GPS','inteligência artificial e machine learning','sensores orbitais e radares','APIs de tráfego aéreo e espacial','redes de comunicação aeronáutica' 'entre outros.']
+    for variabilidade in lista_variabilidades:
+        print(f"• {variabilidade}")
+
+    print('\nA proposta é plausível porque combina em grande parte tecnologias já existentes em uma só plataforma integrada.Empresas e organizações espaciais e de aviação já utilizam monitoramento em tempo real, previsão de rotas e rastreamento orbital, então o diferencial seria centralizar e automatizar essas informações em um único sistema inteligente incluindo a rastreabilidade e classificação de lixo espacial junto ao restante do tráfego aéreo e orbital\n')
     voltar_app()
 
 #funçao para escolher a opçao
@@ -72,9 +86,9 @@ def escolher_opcao():
         elif opcao == 2:
             solucao_projeto()
         elif opcao == 3:
-            print('opção 3 selecionada')
+            viabilidade_tecnica()
         elif opcao == 4:
-            print('opção 4 selecionada')
+            print('Em desenvolvimento...')
         elif opcao == 5:
             finalizar_app()
         else:
