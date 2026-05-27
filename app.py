@@ -9,7 +9,7 @@ def nome_app():
 #funcao que exibe opçoes para o usuario
 def exibir_opcoes():
     print('1- Proposta e Problema do Projeto\n')
-    print('2- Solução do Projeto\n')
+    print('2- Descrição da Solução do Projeto\n')
     print('3- ')
     print('4- ')
     print('5- Sair\n')
@@ -30,6 +30,7 @@ def opcao_invalida():
     print('Opção inválida, tente novamente\n')
     voltar_app()
 
+#funcao que representa a opcao 1, onde o projeto é apresentado e o problema é explicado
 def proposta_problema_projeto():
     #primeira parte da funçao, onde o projeto é apresentado
     os.system('cls')
@@ -50,6 +51,14 @@ def proposta_problema_projeto():
         print(f"• {risco}")
     print('\nPois hoje, muitos dados ficam descentralizados, dificultando respostas rápidas e decisões mais seguras em termos de definição de rota.\n')
 
+    voltar_app()
+
+def solucao_projeto():
+    os.system('cls')
+    print('A solução funcionará como uma forma de integrar informações de companhias aéreas, sistemas de navegação de aeronaves pessoais e operações espaciais, reunindo dados de aviões, helicópteros, foguetes e objetos orbitais como lixo espacial\n')
+    print('Uma única infraestrutura com o propósito de aumentar a segurança e a eficiência do tráfego aéreo, utilizando análise contínua de dados para prever riscos de colisão, calcular rotas mais seguras e gerar desvios automáticos de rota de maneira precisa e dinâmica\n')
+    print('Além disso, a solução auxiliará operações aeroespaciais críticas, permitindo que lançamentos e retornos de foguetes ocorram de forma mais segura através do monitoramento simultâneo do tráfego aéreo e de possíveis riscos orbitais como detritos espaciais e satélites proximos\n')
+    voltar_app()
 
 #funçao para escolher a opçao
 def escolher_opcao():
@@ -61,7 +70,7 @@ def escolher_opcao():
         if opcao == 1:
             proposta_problema_projeto()
         elif opcao == 2:
-            print('opção 2 selecionada')
+            solucao_projeto()
         elif opcao == 3:
             print('opção 3 selecionada')
         elif opcao == 4:
