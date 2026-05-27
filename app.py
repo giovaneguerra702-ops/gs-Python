@@ -79,6 +79,7 @@ def viabilidade_tecnica():
     print('\nA proposta é plausível porque combina em grande parte tecnologias já existentes em uma só plataforma integrada.Empresas e organizações espaciais e de aviação já utilizam monitoramento em tempo real, previsão de rotas e rastreamento orbital, então o diferencial seria centralizar e automatizar essas informações em um único sistema inteligente incluindo a rastreabilidade e classificação de lixo espacial junto ao restante do tráfego aéreo e orbital\n')
     voltar_app()
 
+#funçao que representa a opçao 4, onde o desvio de rotas é simulado de forma interativa, permitindo que o usuário escolha uma rota e veja se há necessidade de desviar para uma opção mais segura
 def desvio_rotas():
     os.system('cls')
     print('Aeronaves e foguetes poderiam receber alertas automáticos de risco de colisão, permitindo que pilotos e controladores de voo tomem decisões informadas sobre desvios de rota ou ajustes de altitude para evitar áreas congestionadas ou perigosas\n')
@@ -122,7 +123,7 @@ def desvio_rotas():
 
     voltar_app()
 
-
+#funçao que representa a opçao 5, onde o tamanho do detrito espacial é simulado de forma interativa, permitindo que o usuário insira dados como distância, velocidade e margem de segurança para calcular uma janela de desvio
 def tamanho_detrito():
     os.system('cls')
     print('PROTOCOLO DE DESVIO - TAMANHO ESTIMADO DE DETRITO ESPACIAL')
@@ -132,19 +133,22 @@ def tamanho_detrito():
     while continuar.lower() == 's':
         try:
             distancia = float(input('Digite a distância até o detrito espacial (em km): '))
-            velocidade = float(input('Digite a velocidade relativa do detrito (em km/s): '))
-            margem = float(input('Digite a margem de segurança (%) para o desvio(nao precisa colocar o %): '))
+            velocidade = float(input('Digite a velocidade relativa do detrito (em km/h): '))
+            margem = float(input('Digite a margem de segurança (%) para o desvio(não precisa colocar o %): '))
 
             if distancia <= 0 or velocidade <= 0 or margem < 0:
                 print('Valores inválidos. Use números positivos para distância e velocidade, e margem maior ou igual a zero.\n')
                 continuar = input('Deseja tentar novamente? (s/n): ').strip().lower()
                 continue
 
-            tamanho_estimado = (distancia * (margem / 100)) + (velocidade * 0.5)
-            print(f'\nTamanho estimado da janela de desvio: {tamanho_estimado:.2f} km')
+            tamanho_estimado = (distancia * (margem / 100) * 0.3) + (velocidade * 0.1)
+            tamanho_estimado = round(tamanho_estimado, 2)
+            print(f'\nTamanho estimado da janela de desvio: {tamanho_estimado} km')
 
-            if tamanho_estimado >= 10:
+            if tamanho_estimado >= 25:
                 print('Recomendação: desvio imediato para rota alternativa.')
+            elif tamanho_estimado >= 10:
+                print('Recomendação: desvio precaucional com monitoramento contínuo.')
             else:
                 print('Recomendação: manter a rota com monitoramento contínuo.')
 
