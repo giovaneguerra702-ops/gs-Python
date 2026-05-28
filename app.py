@@ -122,8 +122,7 @@ def desvio_rotas():
             print('Não há rotas livres disponíveis no momento. Avalie aguardar ou ajustar rota manualmente.')
 
     voltar_app()
-
-#funçao que representa a opçao 5, onde o detrito espacial é simulado de forma interativa, permitindo que o usuário insira dados como distância, velocidade e margem de segurança para calcular uma janela de desvio
+    
 def protocolo_desvio():
     os.system('cls')
     print('PROTOCOLO DE DESVIO - SIMULAÇÃO INTERATIVA')
