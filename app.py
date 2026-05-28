@@ -18,8 +18,9 @@ def exibir_opcoes():
     print('2- Descrição da Solução do Projeto\n')
     print('3- Suporte Tecnológico Coerente e Viabilidade\n')
     print('4- Simulação de Desvio de Rotas\n') 
-    print('5- Simulação de detrito espacial para desvio\n')
-    print('6- Sair\n')
+    print('5- Simulação de Detrito Espacial para Desvio\n')
+    print('6- Classificação Simples de Lixo Espacial\n')
+    print('7- Sair\n')
 
 #funcao que finaliza o app
 def finalizar_app():
@@ -86,7 +87,7 @@ def desvio_rotas():
     input('Pressione Enter para simular um alerta de risco de colisão...')
     os.system('cls')
     print('DESVIO DE ROTAS - SIMULAÇÃO INTERATIVA')
-    print('Aqui você pode escolher a rota atual e ver se há necessidade de desviar para uma opção mais segura.\n')
+    print('Aqui você pode escolher a rota atual e ver se há necessidade de desviar para uma opção mais segura. (claro no projeto real isso sera automatico)\n')
 
     rotas = {
         1: {'nome': 'Rota 1', 'status': 'livre', 'descricao': 'Trajeto direto, sem problemas detectados.'},
@@ -123,10 +124,11 @@ def desvio_rotas():
 
     voltar_app()
     
+#funçao que representa a opçao 5, onde é feita uma simulaçao de detrito espacial para desvio,
 def protocolo_desvio():
     os.system('cls')
     print('PROTOCOLO DE DESVIO - SIMULAÇÃO INTERATIVA')
-    print('Este protótipo simples calcula uma janela de desvio com base na distância, velocidade e margem de segurança.\n')
+    print('Este protótipo simples calcula uma janela de desvio com base na distância, velocidade e margem de segurança.(claro no projeto real isso sera automatico)\n')
 
     continuar = 's'
     while continuar.lower() == 's':
@@ -161,6 +163,29 @@ def protocolo_desvio():
     input('Pressione Enter para continuar...')
     main()
 
+#função que representa a opção 6, onde é feita uma classificação simples de lixo espacial
+def classificacao_extra_lixo_espacial():
+    os.system('cls')
+    print('CLASSIFICAÇÃO EXTRA DE LIXO ESPACIAL')
+    print('Use como exemplo simples de análise por tamanho. (claro no projeto real isso sera automatico)\n')
+
+    try:
+        tamanho = float(input('Digite o tamanho do objeto (em mm): '))
+
+        if tamanho <= 0:
+            print('Valor inválido. O tamanho precisa ser maior que zero.')
+        elif tamanho >= 15:
+            print(f'Resultado: objeto grande e de alto cuidado ({tamanho} mm)')
+        elif tamanho >= 5:
+            print(f'Resultado: objeto de tamanho médio ({tamanho} mm)')
+        else:
+            print(f'Resultado: objeto pequeno e de baixo impacto ({tamanho} mm)')
+
+    except ValueError:
+        print('Entrada inválida. Digite apenas números.')
+
+    voltar_app()
+
 #funçao para escolher a opçao
 def escolher_opcao():
     print('=============================================')
@@ -179,6 +204,8 @@ def escolher_opcao():
         elif opcao == 5:
             protocolo_desvio()
         elif opcao == 6:
+            classificacao_extra_lixo_espacial()
+        elif opcao == 7:
             finalizar_app()
         else:
             opcao_invalida()
