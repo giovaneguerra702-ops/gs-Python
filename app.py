@@ -88,7 +88,7 @@ def desvio_rotas():
     os.system('cls')
     print('DESVIO DE ROTAS - SIMULAÇÃO INTERATIVA')
     print('Aqui você pode escolher a rota atual e ver se há necessidade de desviar para uma opção mais segura. (claro no projeto real isso sera automatico)\n')
-
+    #apresenta rotas com varios status
     rotas = {
         1: {'nome': 'Rota 1', 'status': 'livre', 'descricao': 'Trajeto direto, sem problemas detectados.'},
         2: {'nome': 'Rota 2', 'status': 'congestionada', 'descricao': 'Tráfego aéreo intenso e risco de atraso.'},
@@ -170,17 +170,17 @@ def protocolo_desvio():
         try:
             distancia = float(input('Digite a distância até o detrito espacial (em km): '))
             velocidade = float(input('Digite a velocidade relativa do detrito (em km/h): '))
-            margem = float(input('Digite a margem de segurança (%) para o desvio(não precisa colocar o %): '))
+            margem = float(input('Digite a margem de segurança (%) para o desvio(não precisa colocar o %): ')) #a margem de segurança é um valor que indica o quanto a rota deve ser desviada para evitar o detrito, onde valores maiores indicam desvios mais amplos e seguros, enquanto valores menores indicam desvios mais próximos da rota original
 
             if distancia <= 0 or velocidade <= 0 or margem < 0:
                 print('Valores inválidos. Use números positivos para distância e velocidade, e margem maior ou igual a zero.\n')
                 continuar = input('Deseja tentar novamente? (s/n): ').strip().lower()
                 continue
-
+            #calculo simples para estimar o tamanho da janela de desvio com base na distância, velocidade e margem de segurança, usando uma fórmula hipotética para simulação
             tamanho_estimado = (distancia * (margem / 100) * 0.3) + (velocidade * 0.1)
             tamanho_estimado = round(tamanho_estimado, 2)
             print(f'\nTamanho estimado da janela de desvio: {tamanho_estimado} km')
-
+            #verificação do tamanho estimado para recomendar ações, onde valores maiores indicam necessidade de desvio mais urgente
             if tamanho_estimado >= 25:
                 print('Recomendação: desvio imediato para rota alternativa.')
             elif tamanho_estimado >= 10:
