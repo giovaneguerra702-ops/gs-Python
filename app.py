@@ -92,7 +92,10 @@ def desvio_rotas():
     rotas = {
         1: {'nome': 'Rota 1', 'status': 'livre', 'descricao': 'Trajeto direto, sem problemas detectados.'},
         2: {'nome': 'Rota 2', 'status': 'congestionada', 'descricao': 'Tráfego aéreo intenso e risco de atraso.'},
-        3: {'nome': 'Rota 3', 'status': 'perigosa', 'descricao': 'Área com risco de colisão por detritos ou tráfego espacial.'}
+        3: {'nome': 'Rota 3', 'status': 'perigosa', 'descricao': 'Área com risco de colisão por detritos ou tráfego espacial.'},
+        4: {'nome': 'Rota 4', 'status': 'monitorada', 'descricao': 'Risco moderado, mas ainda aceitável com acompanhamento.'},
+        5: {'nome': 'Rota 5', 'status': 'em_alerta', 'descricao': 'Sinais de colisão iminente e desvio recomendado.'},
+        6: {'nome': 'Rota 6', 'status': 'manutencao', 'descricao': 'Rotina em revisão operacional, evite uso imediato.'}
     }
     for chave, rota in rotas.items():
         print(f"{chave} - {rota['nome']} ({rota['status']}) - {rota['descricao']}")
@@ -110,17 +113,49 @@ def desvio_rotas():
     rota_atual = rotas[escolha]
     print(f"\nVocê selecionou: {rota_atual['nome']} ({rota_atual['status']})")
 
-    if rota_atual['status'] == 'livre':
+    status = rota_atual['status']
+    #desorganizado por enquanto, mas a ideia é mostrar o status da rota escolhida e recomendar ações com base nesse status
+    if status == 'livre':
         print('Status: Sem necessidade de desvio. A rota está segura para prosseguir.')
-    else:
-        alternativas = [rota for rota in rotas.values() if rota['status'] == 'livre']
-        print('Status: Rota com risco detectado.')
+    elif status in ('monitorada', 'congestionada'):
+        alternativas = [
+            rota for chave, rota in rotas.items()
+            if chave != escolha and rota['status'] in ('livre', 'monitorada')
+        ]
+        print('Status: Rota com risco moderado ou tráfego intenso detectado.')
+        print('Recomendação: mantenha monitoramento e considere desvio preventivo.')
         if alternativas:
             print('Sugestão de desvio para rotas mais seguras:')
             for rota in alternativas:
                 print(f"- {rota['nome']}: {rota['descricao']}")
         else:
-            print('Não há rotas livres disponíveis no momento. Avalie aguardar ou ajustar rota manualmente.')
+            print('Não há rotas adequadas disponíveis no momento. Ajuste manualmente a trajetória.')
+    elif status in ('perigosa', 'em_alerta'):
+        alternativas = [
+            rota for chave, rota in rotas.items()
+            if chave != escolha and rota['status'] in ('livre', 'monitorada')
+        ]
+        print('Status: Risco alto detectado. Desvio imediato recomendado.')
+        if alternativas:
+            print('Sugestões de desvio prioritárias:')
+            for rota in alternativas:
+                print(f"- {rota['nome']}: {rota['descricao']}")
+        else:
+            print('Nenhuma rota alternativa segura foi identificada. Avalie espera ou correção manual.')
+    elif status == 'manutencao':
+        print('Status: Rota em manutenção operacional. Evite uso até novo alinhamento da navegação.')
+        alternativas = [
+            rota for chave, rota in rotas.items()
+            if chave != escolha and rota['status'] == 'livre'
+        ]
+        if alternativas:
+            print('Rotas alternativas recomendadas:')
+            for rota in alternativas:
+                print(f"- {rota['nome']}: {rota['descricao']}")
+        else:
+            print('Não há rota livre disponível no momento.')
+    else:
+        print('Status: Situação não categorizada. Verifique a rota com o sistema de monitoramento.')
 
     voltar_app()
     
