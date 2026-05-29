@@ -206,8 +206,7 @@ def protocolo_desvio():
 def classificacao_lixo_espacial():
     os.system('cls')
     print('CLASSIFICAÇÃO DE LIXO ESPACIAL')
-    print('Escolha um dos 5 exemplos abaixo e a função vai classificar o tipo de lixo e o nível de risco.(claro a analise é automatica no projeto real)\n')
-
+    print('A classificação será feita automaticamente para os 5 exemplos abaixo.\n')
     objetos = {
         1: {'nome': 'Fragmento de painel solar', 'tamanho': 8, 'tipo': 1},
         2: {'nome': 'Pedaço de estrutura metálica', 'tamanho': 15, 'tipo': 2},
@@ -215,24 +214,21 @@ def classificacao_lixo_espacial():
         4: {'nome': 'Parte de antena danificada', 'tamanho': 12, 'tipo': 2},
         5: {'nome': 'Resíduo de satélite antigo', 'tamanho': 22, 'tipo': 3},
     }
+
     for codigo, item in objetos.items():
         print(f'{codigo} - {item["nome"]} (tamanho: {item["tamanho"]} cm)')
+    
+    input('Pressione Enter para continuar...')
+    os.system('cls')
 
-    try:
-        escolha = int(input('\nDigite o número do objeto que deseja classificar: '))
-        if escolha not in objetos:
-            print('Opção inválida.')
-            voltar_app()
-            return
+    print('\nClassificando todos os exemplos automaticamente...')
 
-        item = objetos[escolha]
+    for codigo, item in objetos.items():
         tamanho = float(item['tamanho'])
         tipo = int(item['tipo'])
-        #pontuação de risco simples baseada em tamanho e tipo, onde tipos mais perigosos e tamanhos maiores geram pontuaçoes mais altas
         pesos_tipo = {1: 1.0, 2: 3.0, 3: 6.0}
         pontuacao = round((tamanho * 0.2) + pesos_tipo[tipo], 1)
 
-        #classsificaçao do lixo espacial com base na pontuaçao
         if pontuacao < 5:
             categoria = 'Classe Verde'
             descricao = 'Risco baixo: fragmento pequeno ou leve, monitoramento simples.'
@@ -243,15 +239,13 @@ def classificacao_lixo_espacial():
             categoria = 'Classe Vermelha'
             descricao = 'Risco alto: objeto grande ou pesado, exige acompanhamento e desvio cauteloso.'
 
-        print(f'\nObjeto escolhido: {item["nome"]}')
+        print(f'\n{codigo} - {item["nome"]}')
         print(f'Tamanho: {tamanho} cm')
         print(f'Tipo de lixo espacial: {item["nome"]}')
         print(f'Pontuação de risco: {pontuacao}')
         print(f'Categoria: {categoria}')
         print(f'Descrição: {descricao}')
-
-    except ValueError:
-        print('Entrada inválida. Digite apenas números.')
+        print('---------------------------------------------')
 
     voltar_app()
 
