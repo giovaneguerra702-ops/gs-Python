@@ -163,27 +163,31 @@ def desvio_rotas():
 def protocolo_desvio():
     os.system('cls')
     print('PROTOCOLO DE DESVIO - SIMULAÇÃO INTERATIVA')
-    print('Este protótipo simples calcula uma janela de desvio com base na distância, velocidade e margem de segurança.(claro no projeto real isso sera automatico)\n')
+    print('Este protótipo simples calcula a janela de desvio usando apenas a fórmula da distância entre os pontos.\n')
 
     continuar = 's'
     while continuar.lower() == 's':
         try:
-            distancia = float(input('Digite a distância até o detrito espacial (em km): '))
-            velocidade = float(input('Digite a velocidade relativa do detrito (em km/h): '))
-            margem = float(input('Digite a margem de segurança (%) para o desvio(não precisa colocar o %): ')) #a margem de segurança é um valor que indica o quanto a rota deve ser desviada para evitar o detrito, onde valores maiores indicam desvios mais amplos e seguros, enquanto valores menores indicam desvios mais próximos da rota original
+            print('Informe as coordenadas da rota atual e do detrito para calcular a distância de desvio.')
+            x1 = float(input('Digite a coordenada X da rota atual: '))
+            y1 = float(input('Digite a coordenada Y da rota atual: '))
+            x2 = float(input('Digite a coordenada X do detrito espacial: '))
+            y2 = float(input('Digite a coordenada Y do detrito espacial: '))
 
-            if distancia <= 0 or velocidade <= 0 or margem < 0:
-                print('Valores inválidos. Use números positivos para distância e velocidade, e margem maior ou igual a zero.\n')
-                continuar = input('Deseja tentar novamente? (s/n): ').strip().lower()
-                continue
-            #calculo simples para estimar o tamanho da janela de desvio com base na distância, velocidade e margem de segurança, usando uma fórmula hipotética para simulação
-            tamanho_estimado = (distancia * (margem / 100) * 0.3) + (velocidade * 0.1)
-            tamanho_estimado = round(tamanho_estimado, 2)
-            print(f'\nTamanho estimado da janela de desvio: {tamanho_estimado} km')
+            # cálculo da distância com a fórmula euclidiana
+            distancia = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+            distancia = round(distancia, 2)
+
+            print(f'\nDistância calculada entre os pontos: {distancia} km')
+
+            # desvio estimado usando apenas a distância calculada
+            desvio_estimado = distancia
+            desvio_estimado = round(desvio_estimado, 2)
+            print(f'Desvio estimado: {desvio_estimado} km')
             #verificação do tamanho estimado para recomendar ações, onde valores maiores indicam necessidade de desvio mais urgente
-            if tamanho_estimado >= 25:
+            if desvio_estimado <= 5:
                 print('Recomendação: desvio imediato para rota alternativa.')
-            elif tamanho_estimado >= 10:
+            elif desvio_estimado <= 10:
                 print('Recomendação: desvio precaucional com monitoramento contínuo.')
             else:
                 print('Recomendação: manter a rota com monitoramento contínuo.')
