@@ -19,8 +19,9 @@ def exibir_opcoes():
     print('3- Suporte Tecnológico Coerente e Viabilidade\n')
     print('4- Simulação de Desvio de Rotas\n') 
     print('5- Simulação de Detrito Espacial para Desvio\n')
-    print('6- Classificação Simples de Lixo Espacial\n')
-    print('7- Sair\n')
+    print('6- Simulação de Classificação Simples de Lixo Espacial\n')
+    print('7- Simulação de Monitoramento Dinâmico do Espaço Aéreo e Orbital\n')
+    print('8- Sair\n')
 
 #funcao que finaliza o app
 def finalizar_app():
@@ -203,6 +204,56 @@ def protocolo_desvio():
     main()
 
 #função que representa a opção 6, onde é feita uma classificação simples de lixo espacial
+def monitoramento_dinamico():
+    os.system('cls')
+    print('MONITORAMENTO DINÂMICO')
+    print('Simulação simples de atualização automática do cenário aéreo e orbital.\n')
+
+    try:
+        att = int(input('Quantas atualizações você deseja observar? (máximo 7) '))
+        if att <= 0:
+            print('Digite um número maior que zero.')
+            voltar_app()
+            return
+        if att > 7:
+            print('Limite máximo de 7 atualizações atingido.')
+            print('Exibindo apenas as primeiras 7 atualizações.')
+            input('Pressione Enter para continuar...')
+            att = 7
+
+        for passo in range(1, att + 1):
+            os.system('cls')
+            print(f'ATUALIZAÇÃO {passo}/{att}')
+            #pega valores aleatorios para simular o monitoramento
+            rota = random.choice(['Rota Norte', 'Rota Sul', 'Rota Leste', 'Rota Oeste'])
+            trafego = random.choice(['baixo', 'médio', 'alto']) #verifica se existem aeronaves,foguetes ou satélites próximos
+            detrito = random.choice(['nenhum', 'leve', 'moderado'])
+
+            print(f'Rota monitorada: {rota}')
+            print(f'Tráfego aéreo: {trafego}')
+            print(f'Detrito orbital detectado: {detrito}')
+            #avaliaçao para recomendaçao de açao
+            if trafego == 'alto' and detrito == 'moderado':
+                print('Ação sugerida: aumentar o monitoramento e preparar desvio imediato.')
+            elif detrito == 'moderado':
+                print('Ação sugerida: monitoramento reforçado, possível ajuste de rota.')
+            elif detrito == 'leve':
+                print('Ação sugerida: manter atenção na área orbital próxima.')
+            else:
+                print('Ação sugerida: condição estável, acompanhamento normal.')
+
+            if passo < att:
+                input('\nPressione Enter para a próxima atualização...')
+            else:
+                input('\nPressione Enter para voltar ao menu...')
+
+        main()
+
+    except ValueError:
+        print('Entrada inválida. Digite apenas números.')
+        voltar_app()
+
+
 def classificacao_lixo_espacial():
     os.system('cls')
     print('CLASSIFICAÇÃO DE LIXO ESPACIAL')
@@ -269,6 +320,8 @@ def escolher_opcao():
         elif opcao == 6:
             classificacao_lixo_espacial()
         elif opcao == 7:
+            monitoramento_dinamico()
+        elif opcao == 8:
             finalizar_app()
         else:
             opcao_invalida()
