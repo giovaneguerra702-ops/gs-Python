@@ -174,7 +174,7 @@ def protocolo_desvio():
             x2 = float(input('Digite a coordenada X do detrito espacial: '))
             y2 = float(input('Digite a coordenada Y do detrito espacial: '))
 
-            # cálculo da distância com a fórmula euclidiana
+            # cálculo da distância com a fórmula
             distancia = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
             distancia = round(distancia, 2)
 
@@ -184,7 +184,7 @@ def protocolo_desvio():
             desvio_estimado = distancia
             desvio_estimado = round(desvio_estimado, 2)
             print(f'Desvio estimado: {desvio_estimado} km')
-            #verificação do tamanho estimado para recomendar ações, onde valores maiores indicam necessidade de desvio mais urgente
+            #verificação do desvio estimado para recomendar ações, onde valores menores indicam necessidade de desvio mais urgente
             if desvio_estimado <= 5:
                 print('Recomendação: desvio imediato para rota alternativa.')
             elif desvio_estimado <= 10:
@@ -203,22 +203,52 @@ def protocolo_desvio():
     main()
 
 #função que representa a opção 6, onde é feita uma classificação simples de lixo espacial
-def classificacao_extra_lixo_espacial():
+def classificacao_lixo_espacial():
     os.system('cls')
-    print('CLASSIFICAÇÃO EXTRA DE LIXO ESPACIAL')
-    print('Use como exemplo simples de análise por tamanho. (claro no projeto real isso sera automatico)\n')
+    print('CLASSIFICAÇÃO DE LIXO ESPACIAL')
+    print('Escolha um dos 5 exemplos abaixo e a função vai classificar o tipo de lixo e o nível de risco.(claro a analise é automatica no projeto real)\n')
+
+    objetos = {
+        1: {'nome': 'Fragmento de painel solar', 'tamanho': 8, 'tipo': 1},
+        2: {'nome': 'Pedaço de estrutura metálica', 'tamanho': 15, 'tipo': 2},
+        3: {'nome': 'Bloco de combustível vazio', 'tamanho': 30, 'tipo': 3},
+        4: {'nome': 'Parte de antena danificada', 'tamanho': 12, 'tipo': 2},
+        5: {'nome': 'Resíduo de satélite antigo', 'tamanho': 22, 'tipo': 3},
+    }
+    for codigo, item in objetos.items():
+        print(f'{codigo} - {item["nome"]} (tamanho: {item["tamanho"]} cm)')
 
     try:
-        tamanho = float(input('Digite o tamanho do objeto (em mm): '))
+        escolha = int(input('\nDigite o número do objeto que deseja classificar: '))
+        if escolha not in objetos:
+            print('Opção inválida.')
+            voltar_app()
+            return
 
-        if tamanho <= 0:
-            print('Valor inválido. O tamanho precisa ser maior que zero.')
-        elif tamanho >= 15:
-            print(f'Resultado: objeto grande e de alto cuidado ({tamanho} mm)')
-        elif tamanho >= 5:
-            print(f'Resultado: objeto de tamanho médio ({tamanho} mm)')
+        item = objetos[escolha]
+        tamanho = float(item['tamanho'])
+        tipo = int(item['tipo'])
+        #pontuação de risco simples baseada em tamanho e tipo, onde tipos mais perigosos e tamanhos maiores geram pontuaçoes mais altas
+        pesos_tipo = {1: 1.0, 2: 3.0, 3: 6.0}
+        pontuacao = round((tamanho * 0.2) + pesos_tipo[tipo], 1)
+
+        #classsificaçao do lixo espacial com base na pontuaçao
+        if pontuacao < 5:
+            categoria = 'Classe Verde'
+            descricao = 'Risco baixo: fragmento pequeno ou leve, monitoramento simples.'
+        elif pontuacao < 10:
+            categoria = 'Classe Amarela'
+            descricao = 'Risco médio: objeto com tamanho ou massa suficiente para exigir atenção.'
         else:
-            print(f'Resultado: objeto pequeno e de baixo impacto ({tamanho} mm)')
+            categoria = 'Classe Vermelha'
+            descricao = 'Risco alto: objeto grande ou pesado, exige acompanhamento e desvio cauteloso.'
+
+        print(f'\nObjeto escolhido: {item["nome"]}')
+        print(f'Tamanho: {tamanho} cm')
+        print(f'Tipo de lixo espacial: {item["nome"]}')
+        print(f'Pontuação de risco: {pontuacao}')
+        print(f'Categoria: {categoria}')
+        print(f'Descrição: {descricao}')
 
     except ValueError:
         print('Entrada inválida. Digite apenas números.')
@@ -243,7 +273,7 @@ def escolher_opcao():
         elif opcao == 5:
             protocolo_desvio()
         elif opcao == 6:
-            classificacao_extra_lixo_espacial()
+            classificacao_lixo_espacial()
         elif opcao == 7:
             finalizar_app()
         else:
