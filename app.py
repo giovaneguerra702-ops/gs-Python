@@ -164,39 +164,53 @@ def desvio_rotas():
 def protocolo_desvio():
     os.system('cls')
     print('PROTOCOLO DE DESVIO - SIMULAÇÃO INTERATIVA')
-    print('Este protótipo simples calcula a janela de desvio usando apenas a fórmula da distância entre os pontos.\n')
+    print('Aqui você verá uma lista de objetos com coordenadas e poderá verificar se sua rota precisa ser alterada conforme a distância segura.\n')
+
+    detritos = [
+        {'nome': 'Detrito 1', 'x': 12.0, 'y': 8.5},
+        {'nome': 'Detrito 2', 'x': -4.2, 'y': 3.0},
+        {'nome': 'Detrito 3', 'x': 7.8, 'y': -6.1},
+        {'nome': 'Detrito 4', 'x': 0.0, 'y': 15.2},
+    ]
+    distancia_segura = 10.0 #km
 
     continuar = 's'
     while continuar.lower() == 's':
         try:
-            print('Informe as coordenadas da rota atual e do detrito para calcular a distância de desvio.')
-            x1 = float(input('Digite a coordenada X da rota atual: '))
-            y1 = float(input('Digite a coordenada Y da rota atual: '))
-            x2 = float(input('Digite a coordenada X do detrito espacial: '))
-            y2 = float(input('Digite a coordenada Y do detrito espacial: '))
+            print('Objetos detectados no trajeto:')
+            for indice, obj in enumerate(detritos, start=1):
+                print(f"{indice} - {obj['nome']} (X: {obj['x']}, Y: {obj['y']})")
 
-            # cálculo da distância com a fórmula
-            distancia = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-            distancia = round(distancia, 2)
+            print('\nInforme as coordenadas da sua rota atual para calcular a distância até cada objeto.')
+            x_rota = float(input('Digite a coordenada X da sua rota atual: '))
+            y_rota = float(input('Digite a coordenada Y da sua rota atual: '))
 
-            print(f'\nDistância calculada entre os pontos: {distancia} km')
+            print(f'\nDistância segura mínima definida: {distancia_segura} km\n')
+            distancia_minima = None
+            objeto_mais_proximo = None
 
-            # desvio estimado usando apenas a distância calculada
-            desvio_estimado = distancia
-            desvio_estimado = round(desvio_estimado, 2)
-            print(f'Desvio estimado: {desvio_estimado} km')
-            #verificação do desvio estimado para recomendar ações, onde valores menores indicam necessidade de desvio mais urgente
-            if desvio_estimado <= 5:
-                print('Recomendação: desvio imediato para rota alternativa.')
-            elif desvio_estimado <= 10:
-                print('Recomendação: desvio precaucional com monitoramento contínuo.')
-            else:
-                print('Recomendação: manter a rota com monitoramento contínuo.')
+            for obj in detritos:
+                distancia = math.sqrt((obj['x'] - x_rota) ** 2 + (obj['y'] - y_rota) ** 2)
+                distancia = round(distancia, 2)
+                status = 'MANTER ROTA' if distancia > distancia_segura else 'MUDAR ROTA'
+                print(f"{obj['nome']} -> X: {obj['x']}, Y: {obj['y']} | Distância: {distancia} km | {status}")
+
+                if distancia_minima is None or distancia < distancia_minima: #ajuste para encontrar o objeto mais próximo
+                    distancia_minima = distancia
+                    objeto_mais_proximo = obj
+
+            if distancia_minima is not None: #o resumo
+                print('\nResumo da avaliação:')
+                print(f"Objeto mais próximo: {objeto_mais_proximo['nome']} a {distancia_minima} km")
+                if distancia_minima <= distancia_segura:
+                    print('Recomendação geral: Desvio recomendado. A rota atual está próxima demais de um objeto.\n')
+                else:
+                    print('Recomendação geral: Manter a rota. Todas as distâncias estão acima da distância segura.\n')
 
         except ValueError:
             print('Entrada inválida. Digite apenas números.\n')
 
-        continuar = input('\nDeseja realizar outra simulação? (s/n): ').strip().lower()
+        continuar = input('Deseja realizar outra simulação? (s/n): ').strip().lower()
         os.system('cls')
 
     print('Retornando ao menu principal...')
