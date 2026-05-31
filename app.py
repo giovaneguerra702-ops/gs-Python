@@ -203,7 +203,7 @@ def protocolo_desvio():
     input('Pressione Enter para continuar...')
     main()
 
-#função que representa a opção 6, onde é feita uma classificação simples de lixo espacial
+#função que representa a opção 7, onde é feita uma simulação de monitoramento dinâmico do espaço aéreo e 
 def monitoramento_dinamico():
     os.system('cls')
     print('MONITORAMENTO DINÂMICO')
@@ -253,7 +253,7 @@ def monitoramento_dinamico():
         print('Entrada inválida. Digite apenas números.')
         voltar_app()
 
-
+#função que representa a opção 6, onde é feita uma classificação simples de lixo espacial
 def classificacao_lixo_espacial():
     os.system('cls')
     print('CLASSIFICAÇÃO DE LIXO ESPACIAL')
